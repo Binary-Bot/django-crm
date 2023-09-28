@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+<div class="card">
+  <div class="card-header"><strong>
+    	{{ case_record.client_num }} -
+		{{ case_record.matter_num }}</strong>
+  </div>
+  <div class="card-body">
+
+
+
+<p class="card-text">
+<strong>Year: </strong>{{ case_record.year }}</p>
+
+<p class="card-text">
+<strong>Attorney: </strong>{{ case_record.attorney }}
+</p>
+
+<p class="card-text">
+<strong>Client Description: </strong>{{ case_record.client_description }}</p>
+
+<p class="card-text">
+<strong>Matter Description: </strong>{{ case_record.matter_desc }}</p>
+
+<p class="card-text">
+<strong>Client Number: </strong>{{ case_record.client_num }}</p>
+
+<p class="card-text">
+<strong>Matter Number: </strong>{{ case_record.matter_num }}</p>
+
+<p class="card-text">
+<strong>Created at: </strong>{{ case_record.timestamp }}</p>
+
+<p class="card-text">
+<strong>User: </strong>{{ case_record.user }}</p>
+
+<p class="card-text">
+<strong>ID: </strong>{{ case_record.id }}</p>
+    
+    
+  </div>
+</div>
+
+<br/><br/>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+
+<a href="{% url 'delete_record' case_record.id %}" class="btn btn-danger">Delete</a>
+
+
+{% endblock %}
