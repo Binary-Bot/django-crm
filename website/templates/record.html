@@ -2,7 +2,6 @@
 {% block content %}
 
 
-
 <div class="card">
   <div class="card-header"><strong>
     	{{ case_record.client_num }} -
@@ -39,8 +38,8 @@
 
 <p class="card-text">
 <strong>ID: </strong>{{ case_record.id }}</p>
-    
-    
+
+
   </div>
 </div>
 
@@ -48,9 +47,5 @@
 <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
 
 <a href="{% url 'delete_record' case_record.id %}" class="btn btn-danger">Delete</a>
-
-<a href="{% url 'update_record' case_record.id %}" class="btn btn-secondary">Update Record</a>
-
-
 
 {% endblock %}

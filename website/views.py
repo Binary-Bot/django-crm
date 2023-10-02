@@ -60,7 +60,7 @@ def register_user(request):
 # View a case record by id
 def case_record(request, pk):
     if request.user.is_authenticated:
-        customer_record = Record.objects.get(id=pk)
+        case_record = Record.objects.get(id=pk)
         return render(request, 'record.html', {'case_record': case_record})
     else:
         messages.success(request, "You must be logged in to view that page!")

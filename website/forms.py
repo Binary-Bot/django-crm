@@ -22,18 +22,18 @@ class SignUpForm(UserCreationForm):
         self.fields['username'].widget.attrs['class'] = 'form-control'
         self.fields['username'].widget.attrs['placeholder'] = 'User Name'
         self.fields['username'].label = ''
-        self.fields[
-            'username'].help_text = ('<span class="form-text text-muted"><small>Required. 150 characters or fewer. '
-                                     'Letters, digits and @/./+/-/_ only.</small></span>')
+        self.fields['username'].help_text = (
+            '<span class="form-text text-muted"><small>Required. 150 characters or fewer. '
+            'Letters, digits and @/./+/-/_ only.</small></span>')
 
         self.fields['password1'].widget.attrs['class'] = 'form-control'
         self.fields['password1'].widget.attrs['placeholder'] = 'Password'
         self.fields['password1'].label = ''
-        self.fields[
-            'password1'].help_text = ('<ul class="form-text text-muted small"><li>Your password can\'t be too similar '
-                                      'to your other personal information.</li><li>Your password must contain at '
-                                      'least 8 characters.</li><li>Your password can\'t be a commonly used '
-                                      'password.</li><li>Your password can\'t be entirely numeric.</li></ul>')
+        self.fields['password1'].help_text = (
+            '<ul class="form-text text-muted small"><li>Your password can\'t be too similar '
+            'to your other personal information.</li><li>Your password must contain at '
+            'least 8 characters.</li><li>Your password can\'t be a commonly used '
+            'password.</li><li>Your password can\'t be entirely numeric.</li></ul>')
 
         self.fields['password2'].widget.attrs['class'] = 'form-control'
         self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
@@ -45,23 +45,21 @@ class SignUpForm(UserCreationForm):
 # Create Add Record Form
 class AddRecordForm(forms.ModelForm):
     year = forms.IntegerField(required=True, widget=forms.widgets.NumberInput(attrs={
-        'placeholder': 'Year', 'class': 'forms-control'}), label='')
+        'placeholder': 'Year', 'class': 'form-control'}), label='')
     attorney = forms.CharField(required=False, widget=forms.widgets.TextInput(
-        attrs={'placeholder':'Attorney', 'class':'form-control'}), label="")
+        attrs={'placeholder': 'Attorney', 'class': 'form-control'}), label="")
     client_description = forms.CharField(required=True, widget=forms.widgets.TextInput(
         attrs={"placeholder": "Client Description", "class": "form-control"}), label="")
-    matter_description = forms.CharField(required=True, widget=forms.widgets.TextInput(
+    matter_desc = forms.CharField(required=True, widget=forms.widgets.TextInput(
         attrs={"placeholder": "Matter Description", "class": "form-control"}), label="")
     matter_only = forms.BooleanField(widget=forms.widgets.CheckboxInput(
-        attrs={"placeholder":'Matter Only', 'class':"form-control"}), label='')
+        attrs={"placeholder": 'Matter Only  '}), label='Matter Only  ')
     client_num = forms.IntegerField(required=True, widget=forms.widgets.NumberInput(attrs={
-        'placeholder': 'Client Number', 'class': 'forms-control'}), label='')
+        'placeholder': 'Client Number', 'class': 'form-control'}), label='')
     matter_num = forms.IntegerField(required=True, widget=forms.widgets.NumberInput(attrs={
-        'placeholder': 'Client Number', 'class': 'forms-control'}), label='')
-    timestamp = forms.DateTimeField(required=True, widget=forms.widgets.TextInput(attrs={
-        "placeholder": "Today's Date", "class": "form-control"}), label="")
-    user = forms.CharField(required=True,widget=forms.widgets.TextInput(attrs={
-        "placeholder": "User", "class": "form-control"}),label="")
+        'placeholder': 'Matter Number', 'class': 'form-control'}), label='')
+    user = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={
+        "placeholder": "User", "class": "form-control"}), label="")
 
     class Meta:
         model = Record

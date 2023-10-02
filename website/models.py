@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class Record(models.Model):
     year = models.IntegerField()
@@ -12,5 +13,8 @@ class Record(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     user = models.CharField(max_length=50)
 
+    class Meta:
+        ordering = ['-timestamp']
+
     def __str__(self):
-        return(f"{self.client_description} {self.client_num}")
+        return f"{self.client_num} - {self.matter_num} - {self.client_description} - {self.matter_desc}"
