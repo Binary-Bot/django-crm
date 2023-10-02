@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+from .models import Record
 
 
 class SignUpForm(UserCreationForm):
@@ -39,3 +40,29 @@ class SignUpForm(UserCreationForm):
         self.fields['password2'].label = ''
         self.fields['password2'].help_text = ('<span class="form-text text-muted"><small>Enter the same password as '
                                               'before,''for verification.</small></span>')
+
+
+# Create Add Record Form
+class AddRecordForm(forms.ModelForm):
+    year = forms.IntegerField(required=True, widget=forms.widgets.NumberInput(attrs={
+        'placeholder': 'Year', 'class': 'forms-control'}), label='')
+    attorney = forms.CharField(required=False, widget=forms.widgets.TextInput(
+        attrs={'placeholder':'Attorney', 'class':'form-control'}), label="")
+    client_description = forms.CharField(required=True, widget=forms.widgets.TextInput(
+        attrs={"placeholder": "Client Description", "class": "form-control"}), label="")
+    matter_description = forms.CharField(required=True, widget=forms.widgets.TextInput(
+        attrs={"placeholder": "Matter Description", "class": "form-control"}), label="")
+    matter_only = forms.BooleanField(widget=forms.widgets.CheckboxInput(
+        attrs={"placeholder":'Matter Only', 'class':"form-control"}), label='')
+    client_num = forms.IntegerField(required=True, widget=forms.widgets.NumberInput(attrs={
+        'placeholder': 'Client Number', 'class': 'forms-control'}), label='')
+    matter_num = forms.IntegerField(required=True, widget=forms.widgets.NumberInput(attrs={
+        'placeholder': 'Client Number', 'class': 'forms-control'}), label='')
+    timestamp = forms.DateTimeField(required=True, widget=forms.widgets.TextInput(attrs={
+        "placeholder": "Today's Date", "class": "form-control"}), label="")
+    user = forms.CharField(required=True,widget=forms.widgets.TextInput(attrs={
+        "placeholder": "User", "class": "form-control"}),label="")
+
+    class Meta:
+        model = Record
+        exclude = ("user",)
