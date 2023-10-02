@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm, AddRecordForm
 from .models import Record
+from django.db import models
 
 
 # Create your views here.
@@ -79,16 +80,42 @@ def delete_record(request, pk):
 
 
 def add_record(request):
-    form = AddRecordForm(request.POST or None)
-    if request.user.is_authenticated:
-        if request.method == "POST":
-            if form.is_valid():
-                add_record = form.save()
-                messages.success(request, "Record Added...")
-                return redirect('home')
+    if request.method == 'POST':
+        form = AddRecordForm(request.POST)
+        if form.is_valid():
+            # Calculate the next client_num and matter_num
+            if form.cleaned_data.get('matter_only'):
+                # If Matter Only is selected, you can allow the user to enter their own client_num
+                client_num = form.cleaned_data['client_num']
+            else:
+                # Otherwise, calculate the next client_num
+                client_num = Record.objects.aggregate(models.Max('client_num'))['client_num__max'] or 0
+                client_num += 1
 
-        return render(request, 'add_record.html', {'form': form})
+            # Calculate the next matter_num
+            matter_num = Record.objects.aggregate(models.Max('matter_num'))['matter_num__max'] or 0
+            matter_num += 1
+
+            # Create and save the record with the calculated values
+            record = form.save(commit=False)
+            record.client_num = client_num
+            record.matter_num = matter_num
+            record.user = request.user  # Assuming you're using user authentication
+            record.save()
+
+            # Set the initial values for client_num and matter_num in the form
+            form.initial['client_num'] = client_num
+            form.initial['matter_num'] = matter_num
+            messages.success(request, "Record added...")
+            return redirect('home')  # Redirect to the homepage or any other page as needed
     else:
-        messages.success(request, "You must be logged in...")
-        return redirect('home')
+        form = AddRecordForm()
+
+    return render(request, 'add_record.html', {'form': form})
+
+
+def update_record(request, pk):
+    if request.user.is_authenticated:
+        current_record = Record.objects.get(id=pk)
+
 

@@ -52,14 +52,12 @@ class AddRecordForm(forms.ModelForm):
         attrs={"placeholder": "Client Description", "class": "form-control"}), label="")
     matter_desc = forms.CharField(required=True, widget=forms.widgets.TextInput(
         attrs={"placeholder": "Matter Description", "class": "form-control"}), label="")
-    matter_only = forms.BooleanField(widget=forms.widgets.CheckboxInput(
+    matter_only = forms.BooleanField(required=False, widget=forms.widgets.CheckboxInput(
         attrs={"placeholder": 'Matter Only  '}), label='Matter Only  ')
     client_num = forms.IntegerField(required=True, widget=forms.widgets.NumberInput(attrs={
         'placeholder': 'Client Number', 'class': 'form-control'}), label='')
     matter_num = forms.IntegerField(required=True, widget=forms.widgets.NumberInput(attrs={
         'placeholder': 'Matter Number', 'class': 'form-control'}), label='')
-    user = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={
-        "placeholder": "User", "class": "form-control"}), label="")
 
     class Meta:
         model = Record
