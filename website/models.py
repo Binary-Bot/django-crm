@@ -14,7 +14,7 @@ class Record(models.Model):
     user = models.CharField(max_length=50)
 
     class Meta:
-        ordering = ['-timestamp']
+        ordering = ['-timestamp', '-matter_num']
 
     def __str__(self):
         return f"{self.client_num} - {self.matter_num} - {self.client_description} - {self.matter_desc}"
