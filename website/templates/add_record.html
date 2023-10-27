@@ -6,15 +6,62 @@
 <br/>
 
 <form method="POST" action="{% url 'add_record' %}">
-	{% csrf_token %}
+    {% csrf_token %}
 
-	{{ form.as_p }}
+    {{ form.year }}
+    <br/>
+    {{ form.attorney }}
+    <br/>
+    {{ form.client_description }}
+    <br/>
+    {{ form.matter_desc }}
+    <br/>
 
-<br/>
-  <button type="submit" class="btn btn-secondary">Add Record</button>
-   <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+    <div class="form-check">
+        {{ form.matter_only }}
+        <label class="form-check-label">
+            Matter Only
+        </label>
+    </div>
+    <br/>
+
+<div id="client-num-div" class="mb-3">
+    <input type="text" class="form-control" name="{{ form.client_num.name }}" id="{{ form.client_num.id_for_label }}" placeholder="Client Number" pattern="[0-9]+">
+    <div class="invalid-feedback">Please enter a valid number.</div>
+</div>
+
+    <br/>
+
+    <button type="submit" class="btn btn-secondary">Add Record</button>
+    <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
 
 </form>
+
+<script>
+    $(document).ready(function() {
+        // Initially, hide the client_num field
+        $('#client-num-div').hide();
+
+        // Show/hide client_num field based on the "Matter Only" checkbox
+        $('#id_matter_only').change(function() {
+            if (this.checked) {
+                $('#client-num-div').show();
+            } else {
+                $('#client-num-div').hide();
+            }
+        });
+
+        // Validate client_num input
+        $('#id_client_num').on('input', function() {
+            if (!this.checkValidity()) {
+                this.setCustomValidity('Please enter a valid number.');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+    });
+</script>
+
 
 </div>
 
