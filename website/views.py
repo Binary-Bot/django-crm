@@ -4,6 +4,9 @@ from django.contrib import messages
 from .forms import SignUpForm, AddRecordForm
 from .models import Record
 from django.db import models
+from django.utils.safestring import mark_safe
+from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -68,6 +71,7 @@ def case_record(request, pk):
         return redirect('home')
 
 
+@permission_required('CRM.delete_record', raise_exception=True)
 def delete_record(request, pk):
     if request.user.is_authenticated:
         delete_it = Record.objects.get(id=pk)
@@ -106,7 +110,11 @@ def add_record(request):
             # Set the initial values for client_num and matter_num in the form
             form.initial['client_num'] = client_num
             form.initial['matter_num'] = matter_num
-            messages.success(request, "Record added...")
+            # Format the success message with line breaks
+            message = mark_safe(f"Record added...<br><Strong> Client Number: {client_num}"
+                                f"<br>Matter Number: {matter_num} </Strong>")
+            messages.success(request, message)
+
             return redirect('home')  # Redirect to the homepage or any other page as needed
     else:
         form = AddRecordForm()
@@ -122,9 +130,7 @@ def update_record(request, pk):
             form.save()
             messages.success(request, "Record has been updated!")
             return redirect('home')
-        return render(request, 'update_record.html', {'form':form})
+        return render(request, 'update_record.html', {'form': form})
     else:
         messages.success(request, "You must be logged in..")
         return redirect('home')
-
-
